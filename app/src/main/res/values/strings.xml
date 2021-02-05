@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ARestpiGetRequestAoo</string>
+    <string name="textview">TextView</string>
+    <string name="id">ID</string>
+    <string name="name">Name</string>
+    <string name="emailheader">emailheader</string>
+    <string name="nameheader">nameHeader</string>
+    <string name="idheader">IdHeader</string>
+    <string name="emeil">emeil</string>
+</resources>
