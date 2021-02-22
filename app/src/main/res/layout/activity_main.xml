@@ -1,61 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
-
-    <TableLayout
-        android:id="@+id/usersTable"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    tools:context=".MainActivity"
+    android:stretchColumns="1,2,3,4"
+    android:id="@+id/main"
+    >
+     <TableRow>
 
             <TextView
                 android:id="@+id/IdHeader"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:padding="10dp"
                 android:layout_width="47dp"
-                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:layout_gravity="center"
                 android:text="@string/id" />
 
-            <TextView
-                android:id="@+id/NameHeader"
-                android:layout_width="194dp"
-                android:layout_height="match_parent"
-                android:text="@string/name" />
+         <TextView
+             android:id="@+id/AvatarHeader"
+             android:layout_width="75dp"
+             android:layout_column="1"
+             android:layout_gravity="center"
+             android:padding="10dp"
+             android:text="avatar"
+             android:textSize="16dp"
+             android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/EmailHeader"
-                android:layout_width="168dp"
-                android:layout_height="match_parent"
-                android:text="@string/emeil" />
+         <TextView
+             android:id="@+id/NameHeader"
+             android:layout_width="72dp"
+             android:layout_column="1"
+             android:layout_gravity="center"
+             android:padding="10dp"
+             android:text="@string/name"
+             android:textSize="16dp"
+             android:textStyle="bold" />
+
+         <TextView
+             android:id="@+id/EmailHeader"
+             android:layout_width="180dp"
+             android:layout_column="1"
+             android:layout_gravity="center"
+             android:padding="10dp"
+             android:text="Email"
+             android:textSize="16dp"
+             android:textStyle="bold" />
         </TableRow>
 
-        <TableRow
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycle_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"/>
 
-            <TextView
-                android:id="@+id/id"
-                android:layout_width="47dp"
-                android:layout_height="wrap_content"
-                android:text="@string/textview" />
 
-            <TextView
-                android:id="@+id/name"
-                android:layout_width="194dp"
-                android:layout_height="match_parent"
-                android:text="@string/textview" />
-
-            <TextView
-                android:id="@+id/email"
-                android:layout_width="168dp"
-                android:layout_height="match_parent"
-                android:text="@string/textview" />
-        </TableRow>
-
-    </TableLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</TableLayout>

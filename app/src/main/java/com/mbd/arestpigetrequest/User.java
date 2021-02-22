@@ -18,6 +18,20 @@ public class User {
     @SerializedName("last_name")
     @Expose
     private String  last_name;
+    @SerializedName("avatar")
+    @Expose
+    private String avatar;
+
+    public User(int id, String email, String avatar, String first_name ) {
+        this.id = id;
+        this.email = email;
+        this.first_name = first_name;
+        this.avatar = avatar;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
 
     public int getId() {
         return id;

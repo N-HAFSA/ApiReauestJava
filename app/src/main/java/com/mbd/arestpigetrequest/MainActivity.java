@@ -1,13 +1,15 @@
 package com.mbd.arestpigetrequest;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import retrofit2.Call;
@@ -17,56 +19,68 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+
     private TextView textViewResult;
     List<User> usersList;
-
+    RecyclerView recyclerView;
+    UserAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
 
-       // textViewResult = findViewById(R.id.text_view_result);
-        usersList = new ArrayList<>();
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://reqres.in/api/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        JsonApiHolder request = retrofit.create(JsonApiHolder.class);
-        Call<JsonResponse> call1 = request.getUsers();
-        call1.enqueue(new Callback<JsonResponse>() {
-            @Override
-            public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
-                Toast.makeText(MainActivity.this, "Success! response for first item >> \n car :" + response.body().getData().get(0).getLast_name() + "\ndesc :" + response.body().getData().get(0).getFirst_name(), Toast.LENGTH_SHORT).show();
-                textViewResult.setText("Code: " + response.body().getData().get(0).getLast_name() );
-            }
+        recyclerView = findViewById(R.id.recycle_view);
+        parseJson();
 
-            @Override
-            public void onFailure(Call<JsonResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, "Failure", Toast.LENGTH_SHORT).show();
-            }
-
-        });
     }
 
     private void parseJson() {
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://reqres.in/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
-
-        JsonApiHolder request = retrofit.create(JsonApiHolder.class);
-        Call<JsonResponse> call1=request.getUsers();
-        call1.enqueue(new Callback<JsonResponse>() {
+        JsonApiHolder jsonPlaceHolderApi = retrofit.create(JsonApiHolder.class);
+        Call<JsonResponse> call = jsonPlaceHolderApi.getUsers();
+        call.enqueue(new Callback<JsonResponse>() {
             @Override
             public void onResponse(Call<JsonResponse> call, Response<JsonResponse> response) {
-                Toast.makeText(MainActivity.this, "Success! response for first item >> \n car :" + response.body().getData().get(0).getLast_name() + "\ndesc :" + response.body().getData().get(0).getFirst_name(), Toast.LENGTH_SHORT).show();
+                if (!response.isSuccessful()) {
+                    textViewResult.setText("Code: " + response.code());
+                    return;
+                }
+                JsonResponse posts = response.body();
+                setRecyclerView(posts.getData());
+                Log.d("myTag", String.valueOf(posts.getData()));
             }
-
             @Override
             public void onFailure(Call<JsonResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this,"Failure",Toast.LENGTH_SHORT).show();
+                Log.d("failure", t.getMessage());
             }
-
         });
+
     }
+
+    private  void  setRecyclerView(List<User> users){
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new UserAdapter(this,getList(users));
+        recyclerView.setAdapter(adapter);
+    }
+
+    private List<User> getList(List<User> users){
+        List<User> userList =new ArrayList<>();
+        for (User post : users) {
+            Log.d("myTag", String.valueOf(post.getLast_name()));
+            userList.add(new User(Integer.valueOf(post.getId()),String.valueOf(post.getEmail()),String.valueOf(post.getAvatar()),String.valueOf(post.getFirst_name() + " " +post.getLast_name())));
+
+        }
+
+        return userList;
+    }
+    
+
 }

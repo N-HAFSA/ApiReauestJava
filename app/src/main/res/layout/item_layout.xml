@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1,2,3,4"
+  >
+
+    <TableRow
+        android:id="@+id/user">
+
+        <TextView
+            android:id="@+id/idUser"
+            android:textSize="16dp"
+            android:padding="10dp"
+            android:layout_width="47dp"
+            android:layout_column="1"
+            android:layout_gravity="center"
+            android:text="@string/id" />
+
+        <ImageView
+            android:id="@+id/idAvatar"
+            android:padding="10dp"
+            android:layout_width="47dp"
+            android:layout_column="1"
+            android:layout_gravity="center"
+            />
+
+
+        <TextView
+            android:id="@+id/idName"
+            android:layout_width="127dp"
+            android:layout_column="1"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="@string/name"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/idEmail"
+            android:layout_width="191dp"
+            android:layout_column="1"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:text="Email"
+            android:textSize="16dp" />
+    </TableRow>
+</TableLayout>
